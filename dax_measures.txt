@@ -1,0 +1,23 @@
+-- Power BI DAX measures
+Total Tickets = COUNTROWS(ServiceDeskTickets)
+
+Resolved Tickets =
+CALCULATE([Total Tickets], ServiceDeskTickets[Status] IN {"Resolved","Closed"})
+
+Resolution Rate % =
+DIVIDE([Resolved Tickets], [Total Tickets], 0)
+
+SLA Met Tickets =
+CALCULATE([Total Tickets], ServiceDeskTickets[SLA_Met] = 1)
+
+SLA Compliance % =
+DIVIDE([SLA Met Tickets], [Total Tickets], 0)
+
+SLA Breaches =
+CALCULATE([Total Tickets], ServiceDeskTickets[SLA_Met] = 0)
+
+Avg Resolution Hours =
+AVERAGE(ServiceDeskTickets[Resolution_Hours])
+
+Open Backlog =
+CALCULATE([Total Tickets], ServiceDeskTickets[Status] IN {"Open","Pending"})
